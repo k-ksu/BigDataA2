@@ -1,0 +1,78 @@
+version: "3.8"
+
+services:
+  namenode:
+    image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    container_name: namenode
+    environment:
+      - CLUSTER_NAME=hadoop-cluster
+      - HDFS_NAMENODE_USER=root
+      - HDFS_PORT=9000
+    ports:
+      - "9870:9870"
+      - "9000:9000"
+    networks:
+      - spark-cluster
+    volumes:
+      - ./hdfs/namenode:/hadoop/dfs/name
+    tty: true
+
+  datanode:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    container_name: datanode
+    environment:
+      - NAMENODE_HOST=namenode
+      - DATANODE_USER=root
+    networks:
+      - spark-cluster
+    volumes:
+      - ./hdfs/datanode:/hadoop/dfs/data
+    tty: true
+    depends_on:
+      - namenode
+
+  cluster-master:
+    image: firasj/spark-docker-cluster
+    container_name: cluster-master
+    ports:
+      - "8088:8088"
+      - "4040:4040"
+      - "19888:19888"
+    networks:
+      - spark-cluster
+    environment:
+      - HADOOP_CONF_DIR=/etc/hadoop/conf
+    depends_on:
+      - namenode
+      - datanode
+    tty: true
+    working_dir: /app
+    volumes:
+      - ./app:/app
+    hostname: cluster-master
+    entrypoint:
+      - bash
+
+  cluster-slave-1:
+    image: firasj/spark-docker-cluster
+    container_name: cluster-slave-1
+    networks:
+      - spark-cluster
+    depends_on:
+      - cluster-master
+      - namenode
+      - datanode
+    hostname: cluster-slave-1
+    tty: true
+
+  cassandra-server:
+    image: cassandra
+    container_name: cassandra-server
+    ports:
+      - "7000:7000"
+    networks:
+      - spark-cluster
+
+networks:
+  spark-cluster:
+    driver: bridge
