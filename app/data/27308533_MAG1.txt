@@ -1,0 +1,1 @@
+DNA-3-methyladenine glycosylase is an enzyme that in yeast is encoded by the MAG1 gene. MAG1 is involved in protecting DNA against alkylating agents. It initiates base excision repair by removing damaged bases to create abasic sites that are subsequently repaired. == References == Category:Enzymes

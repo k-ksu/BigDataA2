@@ -52,6 +52,7 @@ services:
     hostname: cluster-master
     entrypoint:
       - bash
+      - /app/app.sh
 
   cluster-slave-1:
     image: firasj/spark-docker-cluster

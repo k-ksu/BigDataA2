@@ -1,0 +1,1 @@
+In cryptography, MAG is stream cipher algorithm developed by Rade Vuckovac. It has been submitted to the eSTREAM Project of the eCRYPT network. It has not been selected for focus, nor for consideration in Phase 2; it has been 'archived'. Category:Stream ciphers
