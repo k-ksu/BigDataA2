@@ -17,9 +17,7 @@ app/data/parquet/*.parquet
 # Spark SQL warehouse — created automatically by Spark
 app/spark-warehouse/
 
-# HDFS volume data — managed by Docker, not source code
-hdfs/namenode/
-hdfs/datanode/
+
 
 *.log
 *.out
