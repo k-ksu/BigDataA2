@@ -12,21 +12,21 @@ CASSANDRA_HOST = "cassandra-server"
 KEYSPACE = "search_index"
 
 CASSANDRA_MAX_RETRIES = 20
-CASSANDRA_RETRY_SLEEP = 5  # seconds
+CASSANDRA_RETRY_SLEEP = 5
 
 
-def tokenize(text: str) -> list[str]:
+def tokenize(text: str) -> list:
     return re.findall(r"[a-z]{2,}", text.lower())
 
 
-def compute_tf(tokens: list[str]) -> dict[str, int]:
-    tf: dict[str, int] = {}
+def compute_tf(tokens: list) -> dict:
+    tf: dict = {}
     for token in tokens:
         tf[token] = tf.get(token, 0) + 1
     return tf
 
 
-def parse_filename(filepath: str) -> tuple[str, str]:
+def parse_filename(filepath: str) -> tuple:
     basename = os.path.splitext(os.path.basename(filepath))[0]
     parts = basename.split("_", 1)
     if len(parts) == 2:
@@ -50,7 +50,7 @@ def connect_cassandra() -> tuple:
             session = cluster.connect(KEYSPACE)
             print(f"  Connected (attempt {attempt}).", flush=True)
             return cluster, session
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             print(
                 f"  Attempt {attempt}/{CASSANDRA_MAX_RETRIES} failed: {exc}",
                 flush=True,
@@ -72,7 +72,7 @@ def index_document(
     session,
     doc_id: str,
     doc_title: str,
-    tf_map: dict[str, int],
+    tf_map: dict,
     doc_length: int,
 ) -> None:
 

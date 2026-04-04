@@ -66,12 +66,6 @@ cat > "$HADOOP_CONF_DIR/yarn-site.xml" << 'YARN_EOF'
     <name>yarn.resourcemanager.proxy-user-privileges.enabled</name>
     <value>true</value>
   </property>
-  <!--
-    Use port 8046 for the NodeManager resource-localizer service.
-    The default port 8040 is sometimes still bound by a previous NodeManager
-    process that did not exit cleanly, causing the new NodeManager to fail
-    with "Address already in use".
-  -->
   <property>
     <name>yarn.nodemanager.localizer.address</name>
     <value>0.0.0.0:8046</value>

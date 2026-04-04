@@ -33,14 +33,8 @@ fi
 
 if [ ! -f /app/.venv.tar.gz ]; then
     echo "[INFO] .venv.tar.gz not found — packing virtualenv now..."
-    venv-pack -o /app/.venv.tar.gz
+    venv-pack -f -o /app/.venv.tar.gz
 fi
-
-echo "================================================================"
-echo " search.sh — BM25 query on YARN"
-echo " Query: \"$QUERY\""
-echo "================================================================"
-echo ""
 
 spark-submit \
     --master yarn \
@@ -51,4 +45,6 @@ spark-submit \
     --conf "spark.executorEnv.PYSPARK_PYTHON=./.venv/bin/python" \
     --conf "spark.yarn.submit.waitAppCompletion=true" \
     --conf "spark.ui.showConsoleProgress=false" \
-    /app/query.py "$QUERY"
+    --conf "spark.driver.extraJavaOptions=-Dlog4j.rootCategory=ERROR,console" \
+    --conf "spark.executor.extraJavaOptions=-Dlog4j.rootCategory=ERROR,console" \
+    /app/query.py "$QUERY" 2>/dev/null

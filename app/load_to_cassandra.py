@@ -34,7 +34,7 @@ def wait_for_cassandra() -> Cluster:
             cluster.connect()
             print(f"  Cassandra is ready (attempt {attempt}).", flush=True)
             return cluster
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             print(
                 f"  Attempt {attempt}/{CASSANDRA_MAX_RETRIES} failed: {exc}",
                 flush=True,

@@ -6,7 +6,6 @@ from typing import Dict, Optional
 
 
 def emit(term: str, postings: dict) -> None:
-    """Write one index line for *term* given its {doc_id: tf} postings dict."""
     df = len(postings)
     posting_str = " ".join(f"{did}:{tf}" for did, tf in postings.items())
     print(f"{term}\t{df}\t{posting_str}")

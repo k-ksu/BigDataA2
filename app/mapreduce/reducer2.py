@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
 import sys
+from typing import List, Tuple
 
 
 def main() -> None:
-    docs: list[tuple[str, str, int]] = []
+    docs: List[Tuple[str, str, int]] = []
     total_length: int = 0
 
     for raw_line in sys.stdin:

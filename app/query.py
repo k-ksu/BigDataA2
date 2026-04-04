@@ -33,7 +33,7 @@ def _connect_cassandra():
             )
             session = cluster.connect(KEYSPACE)
             return cluster, session
-        except Exception as exc:  # noqa: BLE001
+        except Exception as exc:
             if attempt == max_retries:
                 print(
                     f"ERROR: Cannot connect to Cassandra after {max_retries} attempts: {exc}",
@@ -140,18 +140,7 @@ def main() -> None:
         print("ERROR: No valid tokens in query.", file=sys.stderr)
         sys.exit(1)
 
-    print(f"\nQuery : '{query_text}'")
-    print(f"Terms : {sorted(query_terms)}\n", flush=True)
-
     N, avgdl, posting_data, doc_info = fetch_index_data(query_terms)
-
-    matched_terms = len(posting_data)
-    print(
-        f"Index : {matched_terms}/{len(query_terms)} query terms found, "
-        f"{len(doc_info)} candidate documents, "
-        f"N={N}, avgdl={avgdl:.1f}",
-        flush=True,
-    )
 
     if not posting_data:
         print("\nNo matching documents found for the query.")

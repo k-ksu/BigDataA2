@@ -1,8 +1,6 @@
 version: "3.8"
 
 services:
-  # Spark Master / Hadoop all-in-one node
-  # Runs app.sh automatically on startup (start services → index → search)
   cluster-master:
     image: firasj/spark-docker-cluster
     container_name: cluster-master
@@ -21,7 +19,6 @@ services:
       - bash
       - /app/app.sh
 
-  # Spark Worker / Slave node
   cluster-slave-1:
     image: firasj/spark-docker-cluster
     container_name: cluster-slave-1
@@ -32,7 +29,6 @@ services:
     hostname: cluster-slave-1
     tty: true
 
-  # Cassandra — stores the inverted index, vocabulary and document statistics
   cassandra-server:
     image: cassandra
     container_name: cassandra-server
