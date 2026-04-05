@@ -7,7 +7,7 @@ Documents are indexed using an inverted index and ranked with the **BM25** algor
 
 ## Prerequisites
 
-- [Docker](https://docs.docker.com/get-docker/) + [Docker Compose](https://docs.docker.com/compose/install/)
+- Docker + Docker Compose
 
 Nothing else — everything runs inside containers.
 
